@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import DateTimePretty from './components/DateTimePretty.js';
+import withPrettyDate from './hoc/withPrettyDate.js';
 
 function DateTime(props) {
   return (
@@ -9,8 +9,7 @@ function DateTime(props) {
 }
 
 function Video(props) {
-     const NewDateTime = DateTimePretty(DateTime);
-    return (
+        return (
         <div className="video">
                <iframe
                 title="Video title"
@@ -19,13 +18,15 @@ function Video(props) {
                 allow="autoplay; encrypted-media"
                 allowfullscreen
                  ></iframe>
-            <NewDateTime date={props.date} />
+            <DateTime date={props.date} />
         </div>
     )
 }
 
+const UpgradedVideo = withPrettyDate(Video);
+
 function VideoList(props) {
-    return props.list.map(item => <Video url={item.url} date={item.date} />);
+    return props.list.map(item => <UpgradedVideo url={item.url} date={item.date} />);
 }
 
 export default function App() {
